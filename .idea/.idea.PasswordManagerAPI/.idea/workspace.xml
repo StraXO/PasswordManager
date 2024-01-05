@@ -21,39 +21,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="df4fe167-e460-4dfb-b9b8-992aa0ff515b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.PasswordManagerAPI/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PasswordManager.sln" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PasswordManagerAPI.http" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.API.Core/PasswordManager.API.Core.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.API.Core/Services/IUserService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.API.Core/Services/Implementation/UserService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.API/Controllers/Auth.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.API/PasswordManager.API.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.Persistence.Domain/DatedEntity.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.Persistence.Domain/Entity.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.Persistence.Domain/Models/PasswordRecord.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.Persistence.Domain/Models/Requests/UserAuthenticationRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.Persistence.Domain/Models/User.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.Persistence.Domain/PasswordManager.Persistence.Domain.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.Persistence.PostgreSQL/PasswordManager.Persistence.PostgreSQL.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.Persistence/AppDbContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.Persistence/Migrations/20240105022712_AddRecordDatesAndPasswordToPasswords.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.Persistence/Migrations/20240105022712_AddRecordDatesAndPasswordToPasswords.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.Persistence/Migrations/20240105033204_RenameAndImprovePasswordRecord.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.Persistence/Migrations/20240105033204_RenameAndImprovePasswordRecord.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.Persistence/Migrations/AppDbContextModelSnapshot.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager.Persistence/PasswordManager.Persistence.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager/PasswordManager.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager/Program.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager/Properties/launchSettings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager/appsettings.Development.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PasswordManager/appsettings.json" afterDir="false" />
-    </list>
+    <list default="true" id="df4fe167-e460-4dfb-b9b8-992aa0ff515b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,6 +42,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -99,7 +68,7 @@
     "HTTP Request.scratch | #1.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -291,13 +260,23 @@
       <workItem from="1704396817433" duration="24000" />
       <workItem from="1704397003499" duration="1327000" />
       <workItem from="1704398399588" duration="112000" />
-      <workItem from="1704398520781" duration="22278000" />
+      <workItem from="1704398520781" duration="23198000" />
     </task>
+    <task id="LOCAL-00001" summary="Initialize project, add a register endpoint">
+      <option name="closed" value="true" />
+      <created>1704426206361</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1704426206361</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -312,6 +291,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Initialize project, add a register endpoint" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initialize project, add a register endpoint" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
