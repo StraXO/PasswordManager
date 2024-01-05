@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using PasswordManager.Persistence.Domain.Models;
+using PasswordManager.Persistence.Domain.Models.Records;
 using PasswordManager.Persistence.Domain.Models.Requests;
 
 namespace PasswordManager.API.Core.Services;
@@ -15,7 +16,7 @@ public interface IUserService
     ///     Returns a <see cref="string"/> containing the JWT token.
     /// </returns>
     Task<string> Authenticate(UserAuthenticationRequest request);
-    
+
     /// <summary>
     ///     Add a <see cref="User"/>.
     /// </summary>

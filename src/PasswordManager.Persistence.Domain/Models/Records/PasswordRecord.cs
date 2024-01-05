@@ -2,9 +2,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PasswordManager.Persistence.Domain.Models;
+namespace PasswordManager.Persistence.Domain.Models.Records;
 
-public class PasswordRecord : DatedEntity
+[Table("UserPasswords")]
+public class PasswordRecord : AbstractDatedRecord
 {
     [MinLength(4)]
     [MaxLength(255)]

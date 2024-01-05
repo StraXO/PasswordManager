@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PasswordManager.Persistence.Domain;
+namespace PasswordManager.Persistence.Domain.Models;
 
-public abstract class DatedEntity : Entity
+public abstract class AbstractDatedRecord : AbstractRecord
 {
     [Required]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

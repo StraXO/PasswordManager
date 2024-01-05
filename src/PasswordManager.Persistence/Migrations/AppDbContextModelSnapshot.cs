@@ -22,7 +22,7 @@ namespace PasswordManager.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("PasswordManager.Persistence.Domain.Models.PasswordRecord", b =>
+            modelBuilder.Entity("PasswordManager.Persistence.Domain.Models.Records.PasswordRecord", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,10 +66,10 @@ namespace PasswordManager.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Passwords");
+                    b.ToTable("UserPasswords");
                 });
 
-            modelBuilder.Entity("PasswordManager.Persistence.Domain.Models.User", b =>
+            modelBuilder.Entity("PasswordManager.Persistence.Domain.Models.Records.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -101,16 +101,16 @@ namespace PasswordManager.Persistence.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("PasswordManager.Persistence.Domain.Models.PasswordRecord", b =>
+            modelBuilder.Entity("PasswordManager.Persistence.Domain.Models.Records.PasswordRecord", b =>
                 {
-                    b.HasOne("PasswordManager.Persistence.Domain.Models.User", null)
+                    b.HasOne("PasswordManager.Persistence.Domain.Models.Records.User", null)
                         .WithMany("Passwords")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PasswordManager.Persistence.Domain.Models.User", b =>
+            modelBuilder.Entity("PasswordManager.Persistence.Domain.Models.Records.User", b =>
                 {
                     b.Navigation("Passwords");
                 });

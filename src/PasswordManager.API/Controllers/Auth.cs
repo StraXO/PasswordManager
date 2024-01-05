@@ -19,7 +19,8 @@ namespace PasswordManager.API.Controllers
         [SwaggerResponse(StatusCodes.Status400BadRequest, "User not found or validation failed.")]
         public void Login([FromBody] UserAuthenticationRequest request)
         {
-            // await userService.Authenticate(user);
+            // TODO: Implement
+            throw new NotImplementedException();
         }
         
         /// <summary>
@@ -28,8 +29,8 @@ namespace PasswordManager.API.Controllers
         /// </summary>
         /// <param name="request">The request body</param>
         [HttpPost("register")]
-        [SwaggerResponse(StatusCodes.Status201Created, "User created.", typeof(string))]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "User already exists or validation failed.")]
+        [SwaggerResponse(StatusCodes.Status201Created, "Registered successfully.", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Email already in use or validation failed.")]
         public async Task<ActionResult>Register([FromBody] UserAuthenticationRequest request)
         {
             // Check if user already exists
@@ -40,6 +41,7 @@ namespace PasswordManager.API.Controllers
             
             var user = await userService.AddUserAsync(request);
 
+            // TODO: Return JWT token
             return Created($"/api/users/{user.Id}", "Registered successfully.");
         }
     }

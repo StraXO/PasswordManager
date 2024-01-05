@@ -2,12 +2,12 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PasswordManager.Persistence;
-using PasswordManager.Persistence.Domain.Models;
+using PasswordManager.Persistence.Domain.Models.Records;
 using PasswordManager.Persistence.Domain.Models.Requests;
 
 namespace PasswordManager.API.Core.Services.Implementation;
 
-public class UserService(AppDbContext context) : IUserService
+public class UserService(AppDbContext context) : Service<User>(context), IUserService
 {
     public Task<string> Authenticate(UserAuthenticationRequest request)
     {
