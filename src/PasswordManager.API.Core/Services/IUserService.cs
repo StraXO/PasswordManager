@@ -22,7 +22,7 @@ public interface IUserService
     /// <returns>
     ///     A task that represents the asynchronous add operation.
     /// </returns>
-    Task AddUserAsync(UserAuthenticationRequest request);
+    Task<User> AddUserAsync(UserAuthenticationRequest request);
 
     /// <summary>
     ///     Check if a <see cref="User"/> exists by email.

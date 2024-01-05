@@ -15,7 +15,7 @@ public class UserService(AppDbContext context) : IUserService
         throw new NotImplementedException();
     }
 
-    public async Task AddUserAsync(UserAuthenticationRequest request)
+    public async Task<User> AddUserAsync(UserAuthenticationRequest request)
     {
         // Create user
         var salt = BCrypt.Net.BCrypt.GenerateSalt();
@@ -31,6 +31,8 @@ public class UserService(AppDbContext context) : IUserService
         
         // Save changes
         await context.SaveChangesAsync();
+ 
+        return user;
     }
 
     public Task<bool> AnyByEmailAsync(string email)

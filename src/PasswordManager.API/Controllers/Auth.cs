@@ -32,17 +32,15 @@ namespace PasswordManager.API.Controllers
         [SwaggerResponse(StatusCodes.Status400BadRequest, "User already exists or validation failed.")]
         public async Task<ActionResult>Register([FromBody] UserAuthenticationRequest request)
         {
-            // TODO: Check why returns 204 No Content instead of 201 Created
-
             // Check if user already exists
             if (userService.AnyByEmailAsync(request.Email).Result)
             {
                 return BadRequest($"Email already in use: {request.Email}");
             }
             
-            await userService.AddUserAsync(request);
+            var user = await userService.AddUserAsync(request);
 
-            return Created();
+            return Created($"/api/users/{user.Id}", "Registered successfully.");
         }
     }
 }
