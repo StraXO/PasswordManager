@@ -1,5 +1,5 @@
+using System.Configuration;
 using Microsoft.EntityFrameworkCore;
-using PasswordManager;
 using PasswordManager.API.Core;
 using PasswordManager.API.Core.Security;
 using PasswordManager.Persistence.PostgreSql;
@@ -12,15 +12,18 @@ public static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        // Endpoints should be lowercase
         builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
-        builder.Services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+        // Add persistence
+        builder.Services.RegisterPostgreSql(builder.Configuration);
 
-        // Add services
+        // Add core
         builder.Services.RegisterCore();
+        
         builder.Services.AddJwtAuthentication(builder.Configuration.GetSection("Jwt"));
 
+        // Add Swagger
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwagger();
 
