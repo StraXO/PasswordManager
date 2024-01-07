@@ -12,7 +12,7 @@ public class PasswordService(IPasswordRepository repository) : IPasswordService
         return await repository.AddAsync(password);
     }
 
-    public async Task<Password?> GetPasswordAsync(int id)
+    public async Task<Password?> GetPasswordAsync(long id)
     {
         return await repository.FindAsync(id);
     }
@@ -27,7 +27,7 @@ public class PasswordService(IPasswordRepository repository) : IPasswordService
         return await repository.UpdateAsync(password);
     }
 
-    public async Task<bool> DeletePasswordAsync(int id)
+    public async Task<bool> DeletePasswordAsync(long id)
     {
         return await repository.RemoveAsync(id);
     }

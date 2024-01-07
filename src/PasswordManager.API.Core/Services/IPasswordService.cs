@@ -8,11 +8,11 @@ public interface IPasswordService
 {
     Task<Password> AddPasswordAsync(Password password);
 
-    Task<Password?> GetPasswordAsync(int id);
+    Task<Password?> GetPasswordAsync(long id);
 
     Task<IEnumerable<Password>> GetUserPasswordsAsync();
 
     Task<Password> UpdatePasswordAsync(Password password);
 
-    Task<bool> DeletePasswordAsync(int id);
+    Task<bool> DeletePasswordAsync(long id);
 }

@@ -7,11 +7,10 @@ namespace PasswordManager.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
 public class Password(IPasswordService passwordService) : ControllerBase
 {
     [HttpGet]
-    [SwaggerResponse(StatusCodes.Status200OK, "Successful retrieved passwords", typeof(IEnumerable<Password>))]
+    [SwaggerResponse(StatusCodes.Status200OK, "Successful retrieved passwords", typeof(Password))]
     public async Task<ActionResult> GetPasswords()
     {
         var passwords = await passwordService.GetUserPasswordsAsync();
@@ -19,11 +18,11 @@ public class Password(IPasswordService passwordService) : ControllerBase
         return Ok(passwords);
     }
 
-    [HttpGet("{id}")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Successful retrieved password", typeof(Password))]
+    [HttpGet("{id:long}")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Successful retrieved password")]
     [SwaggerResponse(StatusCodes.Status403Forbidden, "Forbidden to access this password")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Password not found")]
-    public async Task<ActionResult> GetPassword(int id)
+    public async Task<ActionResult> GetPassword(long id)
     {
         var password = await passwordService.GetPasswordAsync(id);
 

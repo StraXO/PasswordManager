@@ -21,7 +21,7 @@ dotnet restore
 To migrate the database, run the following command:
 
 ```bash
-dotnet ef database update --project .\src\PasswordManager.Persistence.PostgreSql --startup-project .\src\PasswordManager
+dotnet ef database update --project .\src\PasswordManager.Persistence.PostgreSql --startup-project .\src\PasswordManager --project .\src\PasswordManager.Persistence.PostgreSql
 ```
 
 ## Development
@@ -31,13 +31,13 @@ dotnet ef database update --project .\src\PasswordManager.Persistence.PostgreSql
 To migrate the database, run the following command in the base directory of the project:
 
 ```bash
-dotnet ef migrations add <migration-name> --startup-project .\src\PasswordManager
+dotnet ef migrations add <migration-name> --startup-project .\src\PasswordManager --project .\src\PasswordManager.Persistence.PostgreSql
 ```
 
 After that, you can update the database with the following command:
 
 ```bash
-dotnet ef database update --startup-project .\src\PasswordManager
+dotnet ef database update --startup-project .\src\PasswordManager --project .\src\PasswordManager.Persistence.PostgreSql
 ```
 
 ## Production

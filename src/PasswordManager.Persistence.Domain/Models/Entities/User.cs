@@ -9,7 +9,7 @@ public class User
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public new long Id { get; init; }
+    public long Id { get; init; }
 
     [Required]
     [EmailAddress]
