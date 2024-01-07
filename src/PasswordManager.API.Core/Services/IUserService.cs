@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
-using PasswordManager.Persistence.Domain.Models;
-using PasswordManager.Persistence.Domain.Models.Records;
+﻿using System.Threading.Tasks;
+using PasswordManager.Persistence.Domain.Models.Entities;
 using PasswordManager.Persistence.Domain.Models.Requests;
 
 namespace PasswordManager.API.Core.Services;
@@ -15,7 +13,7 @@ public interface IUserService
     ///     A task that represents the asynchronous authentication operation.
     ///     Returns a <see cref="string"/> containing the JWT token.
     /// </returns>
-    Task<string> Authenticate(UserAuthenticationRequest request);
+    Task<string> Authenticate(AuthRequest request);
 
     /// <summary>
     ///     Add a <see cref="User"/>.
@@ -23,7 +21,7 @@ public interface IUserService
     /// <returns>
     ///     A task that represents the asynchronous add operation.
     /// </returns>
-    Task<User> AddUserAsync(UserAuthenticationRequest request);
+    Task<User> AddUserAsync(AuthRequest request);
 
     /// <summary>
     ///     Check if a <see cref="User"/> exists by email.

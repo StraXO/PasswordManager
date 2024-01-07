@@ -1,32 +1,44 @@
 using Microsoft.EntityFrameworkCore;
-using PasswordManager.API.Core.Services;
-using PasswordManager.API.Core.Services.Implementation;
-using PasswordManager.Persistence;
+using PasswordManager;
+using PasswordManager.API.Core;
+using PasswordManager.API.Core.Security;
+using PasswordManager.Persistence.PostgreSql;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace PasswordManager;
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IUserService, UserService>();
-
-var app = builder.Build();
-
-app.MapControllers();
-app.UseAuthentication();
-app.UseAuthorization();
-
-if (app.Environment.IsDevelopment())
+public static class Program
 {
-    app.Logger.LogInformation("Running in development");
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
+
+        builder.Services.AddDbContext<AppDbContext>(options =>
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+        // Add services
+        builder.Services.RegisterCore();
+        builder.Services.AddJwtAuthentication(builder.Configuration.GetSection("Jwt"));
+
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwagger();
+
+        var app = builder.Build();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseHttpsRedirection();
+        app.UseStatusCodePages();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.MapControllers();
+
+        app.Run();
+    }
 }
-
-app.UseHttpsRedirection();
-
-app.Run();

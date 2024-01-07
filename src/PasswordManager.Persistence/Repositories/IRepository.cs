@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
-namespace PasswordManager.API.Core.Services;
+namespace PasswordManager.Persistence.Repositories;
 
-public interface IService<T> where T : class
+public interface IRepository<T> where T : class
 {
     /// <summary>
     ///     Find an entity by id.
@@ -37,6 +34,16 @@ public interface IService<T> where T : class
     Task<IEnumerable<T>> FindAllAsync();
 
     /// <summary>
+    ///     Find all entities by predicate.
+    /// </summary>
+    /// <param name="predicate">The <see cref="Expression" /> that will be used to look for the entities.</param>
+    /// <returns>
+    ///     A task that represents the asynchronous get operation.
+    ///     Returns a collection of entities <see cref="IEnumerable{T}"/>.
+    /// </returns>
+    Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate);
+
+    /// <summary>
     ///     Check if an entity exists by id.
     /// </summary>
     /// <param name="id">The id of the entity to check</param>
@@ -45,7 +52,7 @@ public interface IService<T> where T : class
     ///     Returns a <see cref="bool"/> indicating whether the entity exists.
     /// </returns>
     Task<bool> ExistsAsync(long id);
-    
+
     /// <summary>
     ///     Check if an entity exists by id.
     /// </summary>
@@ -65,6 +72,15 @@ public interface IService<T> where T : class
     ///     Returns the added entity <see cref="T"/>.
     /// </returns>
     Task<T> AddAsync(T entity);
+
+    /// <summary>
+    ///     Add a list of new entities.
+    /// </summary>
+    /// <param name="entities">The list of entities to add</param>
+    /// <returns>
+    ///     A task that represents the asynchronous add operation.
+    /// </returns>
+    Task AddManyAsync(IEnumerable<T> entities);
 
     /// <summary>
     ///     Update an entity.
@@ -93,7 +109,7 @@ public interface IService<T> where T : class
     ///     A task that represents the asynchronous delete operation.
     /// </returns>
     Task<bool> RemoveAsync(long id);
-    
+
     /// <summary>
     ///     Delete an entity by predicate.
     /// </summary>
