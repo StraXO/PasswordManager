@@ -2,4 +2,7 @@
 
 namespace PasswordManager.Persistence.Repositories;
 
+/// <summary>
+///     The repository responsible for the <see cref="User"/> table.
+/// </summary>
 public interface IUserRepository : IRepository<User>;

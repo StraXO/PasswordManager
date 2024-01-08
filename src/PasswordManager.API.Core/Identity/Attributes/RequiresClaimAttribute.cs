@@ -3,8 +3,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace PasswordManager.API.Core.Identity;
+namespace PasswordManager.API.Core.Identity.Attributes;
 
+/// <summary>
+///     An <see cref="Attribute"/> that checks whether a claim contains the specified value.
+///     If the claim does not have the specified value, a <see cref="ForbidResult"/> response will be returned.
+/// </summary>
+/// <param name="claimName">The name of the claim</param>
+/// <param name="claimValue">The allowed value of the claim</param>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class RequiresClaimAttribute(string claimName, string claimValue) : Attribute, IAuthorizationRequirement
 {
@@ -15,8 +21,10 @@ public class RequiresClaimAttribute(string claimName, string claimValue) : Attri
     /// </summary>
     /// <param name="context">The authorization context</param>
     /// <example>
+    ///     For controllers that only allow users with the admin role:
+    ///
     ///     [Authorize]
-    ///     [RequiresClaim(claimName: "role", claimValue: "Admin")]
+    ///     [RequiresClaim(claimName: "role", claimValue: Role.Admin.ToString())]
     /// </example>
     public void OnAuthorization(AuthorizationFilterContext context)
     {

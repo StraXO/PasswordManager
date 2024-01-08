@@ -3,6 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PasswordManager.Persistence.Domain.Models.Requests;
 
+/// <summary>
+///     The request object used for authentication
+///     Contains the Email and Password fields
+/// </summary>
 public class AuthRequest
 {
     [Required]

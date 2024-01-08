@@ -4,8 +4,18 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace PasswordManager;
 
+/// <summary>
+///     Class responsible for adding the Swagger docs.
+/// </summary>
 public static class Swagger
 {
+    /// <summary>
+    ///     Add Swagger to the <see cref="IServiceCollection"/>.
+    /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection"/> to add Swagger to.</param>
+    /// <returns>
+    ///     The <see cref="IServiceCollection"/> so that additional calls can be chained.
+    /// </returns>
     public static IServiceCollection AddSwagger(this IServiceCollection services)
     {
         services.AddSwaggerGen(options =>

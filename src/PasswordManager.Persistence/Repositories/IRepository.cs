@@ -2,6 +2,10 @@
 
 namespace PasswordManager.Persistence.Repositories;
 
+/// <summary>
+///     Base repository class that contains standard functionality used to communicate with the database.
+/// </summary>
+/// <typeparam name="T">The entity type to query for</typeparam>
 public interface IRepository<T> where T : class
 {
     /// <summary>
