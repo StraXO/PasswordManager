@@ -4,4 +4,4 @@ using PasswordManager.Persistence.Repositories;
 
 namespace PasswordManager.Persistence.PostgreSql.Repositories;
 
-public class UserRepository(AppDbContext context) : Repository<User>(context), IUserRepository;
+public class UserRepository(PostgresDbContext context) : Repository<User>(context), IUserRepository;

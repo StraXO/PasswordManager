@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using PasswordManager.API.Core.Security;
 using PasswordManager.Persistence.Domain.Models.Entities;
 
-namespace PasswordManager.API.Core.Security.TokenServices;
+namespace PasswordManager.Persistence.PostgreSql.Security;
 
 public class TokenService(ILogger<TokenService> logger, IConfiguration configuration) : ITokenService
 {
@@ -38,9 +37,11 @@ public class TokenService(ILogger<TokenService> logger, IConfiguration configura
         {
             return
             [
-                new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email!),
+                new Claim(JwtClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
+                new Claim(JwtClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtClaimNames.Sub, user.Email),
+                new Claim( JwtClaimNames.Userid, user.Id.ToString()),
+                new Claim( JwtClaimNames.Role, user.Role.ToString())
             ];
         }
         catch (Exception e)

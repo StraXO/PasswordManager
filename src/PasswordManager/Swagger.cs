@@ -20,16 +20,20 @@ public static class Swagger
                 Type = SecuritySchemeType.Http,
                 Description = "Enter 'Bearer' [space] and your token",
                 BearerFormat = "JWT",
-                Scheme = "bearer"
+                Scheme = "Bearer"
             });
 
-            // Make sure swagger UI requires a Bearer token specified
+            // Make sure swagger UI requires a Bearer token for all endpoints with the [Authorize] attribute
             options.OperationFilter<SecurityRequirementOperationsFilter>();
         });
 
         return services;
     }
 
+    /// <summary>
+    ///     This method is used to add the lock icon to endpoints which require authentication
+    /// </summary>
+    /// <returns>Returns the <see cref="OpenApiSecurityRequirement"/></returns>
     private static OpenApiSecurityRequirement GetSecurityRequirement()
     {
         return new OpenApiSecurityRequirement
@@ -43,28 +47,36 @@ public static class Swagger
                         Id = "Bearer"
                     }
                 },
-                new List<string>()
+                Array.Empty<string>()
             }
         };
     }
 
     /// <summary>
     ///     This class is used to add the lock icon to endpoints which require authentication
-    ///     and to make sure that the JWT token is required for all endpoints with the AllowAnonymous attribute.
+    ///     and to ensure that the token is required for all endpoints with the [Authorize] attribute.
     /// </summary>
     private class SecurityRequirementOperationsFilter : IOperationFilter
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            var noAuthRequired = context.ApiDescription.CustomAttributes()
-                .Any(attr => attr.GetType() == typeof(AllowAnonymousAttribute));
+            // Add lock icon to endpoints which require authentication - the [Authorize] attribute
+            var authRequired = context.ApiDescription.CustomAttributes()
+                .Any(attr => attr.GetType() == typeof(AuthorizeAttribute));
 
-            if (noAuthRequired) return;
-
-            operation.Security = new List<OpenApiSecurityRequirement>
+            if (authRequired)
             {
-                GetSecurityRequirement()
-            };
+                operation.Security = new List<OpenApiSecurityRequirement> 
+                {
+                    GetSecurityRequirement()
+                };
+            }
+            
+            // Ensure there is no lock icon on endpoints which do not require authentication - the [AllowAnonymous] attribute
+            // var noAuthRequired = context.ApiDescription.CustomAttributes()
+            //     .Any(attr => attr.GetType() == typeof(AllowAnonymousAttribute));
+            //
+            // if (noAuthRequired) return;
         }
     }
 }

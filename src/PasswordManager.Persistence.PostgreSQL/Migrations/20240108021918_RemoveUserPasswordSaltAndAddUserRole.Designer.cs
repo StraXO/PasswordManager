@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PasswordManager.Persistence.PostgreSql;
@@ -11,9 +12,11 @@ using PasswordManager.Persistence.PostgreSql;
 namespace PasswordManager.Persistence.PostgreSql.Migrations
 {
     [DbContext(typeof(PostgresDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240108021918_RemoveUserPasswordSaltAndAddUserRole")]
+    partial class RemoveUserPasswordSaltAndAddUserRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

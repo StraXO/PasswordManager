@@ -4,4 +4,4 @@ using PasswordManager.Persistence.Repositories;
 
 namespace PasswordManager.Persistence.PostgreSql.Repositories;
 
-public class PasswordRepository(AppDbContext context) : Repository<Password>(context), IPasswordRepository;
+public class PasswordRepository(PostgresDbContext context) : Repository<Password>(context), IPasswordRepository;

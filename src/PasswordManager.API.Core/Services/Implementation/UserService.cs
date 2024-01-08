@@ -1,28 +1,46 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using PasswordManager.API.Core.Security;
 using PasswordManager.Persistence.Domain.Models.Entities;
 using PasswordManager.Persistence.Domain.Models.Requests;
+using PasswordManager.Persistence.Domain.Models.Response;
 using PasswordManager.Persistence.Repositories;
 
 namespace PasswordManager.API.Core.Services.Implementation;
 
-public class UserService(IUserRepository repository) : IUserService
+public class UserService(IUserRepository repository, ITokenService tokenService) : IUserService
 {
-    public Task<string> Authenticate(AuthRequest request)
+    public async Task<AuthResponse?> Authenticate(AuthRequest request)
     {
-        // TODO: Implement
-        throw new NotImplementedException();
+        // Find user
+        var user = await repository.FindAsync(u => u.Email == request.Email);
+
+        if (user == null)
+            return null;
+
+        // Check password
+        if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
+            return null;
+
+        return CreateToken(user);
+    }
+
+    public AuthResponse CreateToken(User user)
+    {
+        var token = tokenService.CreateToken(user);
+
+        return new AuthResponse
+        {
+            Token = token,
+        };
     }
 
     public async Task<User> AddUserAsync(AuthRequest request)
     {
         // Create user
-        var salt = BCrypt.Net.BCrypt.GenerateSalt();
         User user = new()
         {
             Email = request.Email,
-            Password = BCrypt.Net.BCrypt.HashPassword(request.Password, salt: salt),
-            Salt = salt
+            Password = BCrypt.Net.BCrypt.HashPassword(request.Password)
         };
 
         return await repository.AddAsync(user);

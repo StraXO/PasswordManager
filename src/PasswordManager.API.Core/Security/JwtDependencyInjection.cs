@@ -1,12 +1,11 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Protocols.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using PasswordManager.API.Core.Security.TokenServices;
-using PasswordManager.Persistence.PostgreSql;
-using PasswordManager.Persistence.Domain.Models;
 
 namespace PasswordManager.API.Core.Security;
 
@@ -15,26 +14,14 @@ public static class JwtDependencyInjection
     public static IServiceCollection AddJwtAuthentication(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddScoped<ITokenService, TokenService>();
-
+        // Add HttpContextAccessor to get access to the jwt token
+        services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        
+        // Add authentication and authorization
         services.AddAuthentication(configuration);
-
-        services.AddAuthenticationIdentity();
+        services.AddAuthorization();
 
         return services;
-    }
-
-    private static void AddAuthenticationIdentity(this IServiceCollection services)
-    {
-        services.AddIdentityCore<ApplicationUser>(options =>
-        {
-            options.SignIn.RequireConfirmedAccount = false;
-            options.User.RequireUniqueEmail = true;
-            options.Password.RequireDigit = false;
-            options.Password.RequiredLength = 6;
-            options.Password.RequireNonAlphanumeric = false;
-            options.Password.RequireUppercase = false;
-        }).AddEntityFrameworkStores<AppDbContext>();
     }
 
     private static void AddAuthentication(this IServiceCollection services, IConfiguration configuration)

@@ -4,8 +4,7 @@ using PasswordManager.Persistence.Repositories;
 
 namespace PasswordManager.Persistence.PostgreSql.Repositories;
 
-// TODO: Figure out how to ensure that the user only gets results that is linked to their account.
-public class Repository<T>(AppDbContext context) : IRepository<T> where T : class
+public class Repository<T>(PostgresDbContext context) : IRepository<T> where T : class
 {
     public async Task<T?> FindAsync(long id)
     {
@@ -14,7 +13,7 @@ public class Repository<T>(AppDbContext context) : IRepository<T> where T : clas
 
     public async Task<T?> FindAsync(Expression<Func<T, bool>> predicate)
     {
-        return await context.FindAsync<T>(predicate).ConfigureAwait(false);
+        return await context.Set<T>().Where(predicate).FirstOrDefaultAsync().ConfigureAwait(false);
     }
 
     public async Task<IEnumerable<T>> FindAllAsync()

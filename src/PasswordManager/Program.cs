@@ -1,5 +1,3 @@
-using System.Configuration;
-using Microsoft.EntityFrameworkCore;
 using PasswordManager.API.Core;
 using PasswordManager.API.Core.Security;
 using PasswordManager.Persistence.PostgreSql;
@@ -15,12 +13,14 @@ public static class Program
         // Endpoints should be lowercase
         builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
-        // Add persistence
-        builder.Services.RegisterPostgreSql(builder.Configuration);
+        // Add persistence (PostgreSQL)
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        builder.Services.RegisterPostgreSql(connectionString);
 
         // Add core
         builder.Services.RegisterCore();
         
+        // Enable JWT Authentication
         builder.Services.AddJwtAuthentication(builder.Configuration.GetSection("Jwt"));
 
         // Add Swagger

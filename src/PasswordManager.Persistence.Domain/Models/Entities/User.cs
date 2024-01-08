@@ -20,11 +20,10 @@ public class User
     [PasswordPropertyText]
     [MaxLength(255)]
     public required string Password { get; set; }
-
+    
     [Required]
-    [PasswordPropertyText]
-    [MaxLength(255)]
-    public required string Salt { get; set; }
+    [EnumDataType(typeof(Role))]
+    public Role Role { get; set; } = Role.User;
 
     // Relations
     [ForeignKey("UserId")]

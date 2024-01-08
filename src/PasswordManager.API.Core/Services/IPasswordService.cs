@@ -12,7 +12,7 @@ public interface IPasswordService
 
     Task<IEnumerable<Password>> GetUserPasswordsAsync();
 
-    Task<Password> UpdatePasswordAsync(Password password);
+    Task<Password?> UpdatePasswordAsync(Password password);
 
     Task<bool> DeletePasswordAsync(long id);
 }

@@ -1,11 +1,10 @@
 ﻿using PasswordManager.Persistence.Domain.Models.Entities;
 
-namespace PasswordManager.API.Core.Security.TokenServices;
+namespace PasswordManager.API.Core.Security;
 
 /// <summary>
 ///     A service that handles user authentication.
 /// </summary>
-/// <typeparam name="T">The type of the user</typeparam>
 public interface ITokenService
 {
     /// <summary>
