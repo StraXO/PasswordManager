@@ -5,12 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PasswordManager.Persistence.Domain.Models.Entities;
 
 [Table("Users")]
-public class User
+public class User : AbstractDatedRecord
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public long Id { get; init; }
-
     [Required]
     [EmailAddress]
     [MaxLength(255)]

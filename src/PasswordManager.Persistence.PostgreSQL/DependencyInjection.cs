@@ -20,7 +20,7 @@ public static class DependencyInjection
     ///     This method should be called in the <see cref="WebApplicationBuilder.Services" /> method.
     /// </summary>
     /// <param name="services">The ServiceCollection to use</param>
-    /// <param name="connectionString">The connectionString used to connect to the database</param>
+    /// <param name="connectionString">The connection string of the database to connect to.</param>
     public static void RegisterPostgreSql(this IServiceCollection services, string? connectionString)
     {
         services.AddDbContext<PostgresDbContext>(options =>
@@ -29,7 +29,7 @@ public static class DependencyInjection
         services.AddScoped<PostgresDbContext>();
 
         // Repository used to access the database for specific models
-        services.AddScoped<IJwtTokenService, JwtJwtTokenService>();
+        services.AddScoped<IJwtTokenService, JwtTokenService>();
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IPasswordRepository, PasswordRepository>();

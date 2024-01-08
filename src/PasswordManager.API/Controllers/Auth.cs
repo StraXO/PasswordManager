@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PasswordManager.API.Core.Security;
 using PasswordManager.API.Core.Services;
 using PasswordManager.Persistence.Domain.Models.Entities;
 using PasswordManager.Persistence.Domain.Models.Requests;

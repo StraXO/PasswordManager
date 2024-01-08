@@ -83,8 +83,9 @@ public interface IRepository<T> where T : class
     /// <param name="entities">The list of entities to add</param>
     /// <returns>
     ///     A task that represents the asynchronous add operation.
+    ///     Returns the number of entities added <see cref="int"/>.
     /// </returns>
-    Task AddManyAsync(IEnumerable<T> entities);
+    Task<int> AddManyAsync(IEnumerable<T> entities);
 
     /// <summary>
     ///     Update an entity.

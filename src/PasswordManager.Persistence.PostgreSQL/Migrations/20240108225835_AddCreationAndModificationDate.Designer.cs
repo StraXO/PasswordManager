@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PasswordManager.Persistence.PostgreSql;
@@ -11,9 +12,11 @@ using PasswordManager.Persistence.PostgreSql;
 namespace PasswordManager.Persistence.PostgreSql.Migrations
 {
     [DbContext(typeof(PostgresDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240108225835_AddCreationAndModificationDate")]
+    partial class AddCreationAndModificationDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +34,7 @@ namespace PasswordManager.Persistence.PostgreSql.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedDateTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("HashedPassword")
@@ -39,6 +43,7 @@ namespace PasswordManager.Persistence.PostgreSql.Migrations
                         .HasColumnType("character varying(255)");
 
                     b.Property<DateTime>("ModifiedDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Notes")
@@ -80,6 +85,7 @@ namespace PasswordManager.Persistence.PostgreSql.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedDateTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
@@ -88,6 +94,7 @@ namespace PasswordManager.Persistence.PostgreSql.Migrations
                         .HasColumnType("character varying(255)");
 
                     b.Property<DateTime>("ModifiedDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Password")

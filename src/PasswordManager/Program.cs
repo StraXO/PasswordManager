@@ -1,3 +1,4 @@
+using PasswordManager.API;
 using PasswordManager.API.Core;
 using PasswordManager.API.Core.Security;
 using PasswordManager.Persistence.PostgreSql;
@@ -14,14 +15,17 @@ public static class Program
         builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
         // Add persistence (PostgreSQL)
-        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        var connectionString = builder.Configuration.GetConnectionString(ConfigurationKeys.ConnectionString);
         builder.Services.RegisterPostgreSql(connectionString);
 
         // Add core
         builder.Services.RegisterCore();
         
         // Enable JWT Authentication
-        builder.Services.AddJwtAuthentication(builder.Configuration.GetSection("Jwt"));
+        builder.Services.AddJwtAuthentication(builder.Configuration,
+            ConfigurationKeys.Jwt.Issuer,
+            ConfigurationKeys.Jwt.Audience,
+            ConfigurationKeys.Jwt.SigningKey);
 
         // Add Swagger
         builder.Services.AddEndpointsApiExplorer();

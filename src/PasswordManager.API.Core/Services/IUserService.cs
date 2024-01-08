@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using PasswordManager.API.Core.Security;
 using PasswordManager.Persistence.Domain.Models.Entities;
 using PasswordManager.Persistence.Domain.Models.Requests;
 using PasswordManager.Persistence.Domain.Models.Response;

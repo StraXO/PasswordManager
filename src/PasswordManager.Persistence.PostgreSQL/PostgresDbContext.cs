@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PasswordManager.Persistence.Domain.Models.Entities;
 
 namespace PasswordManager.Persistence.PostgreSql;
@@ -8,7 +7,7 @@ namespace PasswordManager.Persistence.PostgreSql;
 ///     The database context for the application that allows communication with the database.
 /// </summary>
 /// <param name="context">The database context</param>
-public class PostgresDbContext(DbContextOptions<PostgresDbContext> context) : IdentityDbContext(context)
+public class PostgresDbContext(DbContextOptions<PostgresDbContext> context) : DbContext(context)
 {
     /// <summary>
     ///     A <see cref="DbSet{TEntity}" /> that represents the <see cref="User"/> table/record collection.

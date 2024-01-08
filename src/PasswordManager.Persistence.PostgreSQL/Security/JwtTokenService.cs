@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using PasswordManager.API.Core.Security;
@@ -14,7 +13,7 @@ namespace PasswordManager.Persistence.PostgreSql.Security;
 ///     The service responsible for creating a token.
 /// </summary>
 /// <param name="configuration">The <see cref="IConfiguration"/> that contains a set of key/value application configuration properties.</param>
-public class JwtJwtTokenService(IConfiguration configuration) : IJwtTokenService
+public class JwtTokenService(IConfiguration configuration) : IJwtTokenService
 {
     public string CreateToken(User user)
     {

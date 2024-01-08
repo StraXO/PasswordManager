@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace PasswordManager;
+namespace PasswordManager.API;
 
 /// <summary>
 ///     Class responsible for adding the Swagger docs.
@@ -28,7 +28,7 @@ public static class Swagger
                 In = ParameterLocation.Header,
                 Name = "Authorization",
                 Type = SecuritySchemeType.Http,
-                Description = "Enter 'Bearer' [space] and your token",
+                Description = "Enter your token, the 'Bearer ' part is automatically added",
                 BearerFormat = "JWT",
                 Scheme = "Bearer"
             });

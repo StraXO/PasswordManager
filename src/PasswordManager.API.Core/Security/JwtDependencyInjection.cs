@@ -20,23 +20,27 @@ public static class JwtDependencyInjection
     /// </summary>
     /// <param name="services">The <see cref="IServiceCollection"/> to add services to.</param>
     /// <param name="configuration">The <see cref="IConfiguration"/> used to retrieve application properties from.</param>
+    /// <param name="issuerConfigurationKey">The configuration key of the issuer of the JWT</param>
+    /// <param name="audienceConfigurationKey">The configuration key of the audience of the JWT</param>
+    /// <param name="signingKeyConfigurationKey">The configuration key of the secret JWT signing key</param>
     /// <returns>
     ///     The <see cref="IServiceCollection"/> so that additional calls can be chained.
     /// </returns>
     public static IServiceCollection AddJwtAuthentication(this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration, string issuerConfigurationKey, string audienceConfigurationKey, string signingKeyConfigurationKey)
     {
         // Add HttpContextAccessor to get access to the jwt token
         services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         
         // Add authentication and authorization
-        services.AddAuthentication(configuration);
+        services.AddAuthentication(configuration, issuerConfigurationKey, audienceConfigurationKey, signingKeyConfigurationKey);
         services.AddAuthorization();
 
         return services;
     }
 
-    private static void AddAuthentication(this IServiceCollection services, IConfiguration configuration)
+    private static void AddAuthentication(this IServiceCollection services, 
+        IConfiguration configuration, string issuerConfigurationKey, string audienceConfigurationKey, string signingKeyConfigurationKey)
     {
         services.AddAuthentication(options =>
         {
@@ -45,17 +49,18 @@ public static class JwtDependencyInjection
             options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(o =>
         {
-            var signingKey = configuration["SigningKey"] ??
-                             throw new InvalidConfigurationException("JWT Signing Key is not set.");
-            var issuer = configuration["Issuer"] ?? throw new InvalidConfigurationException("JWT Issuer is not set.");
-            var audience = configuration["Audience"] ??
+            var issuerValue = configuration[issuerConfigurationKey] ??
+                         throw new InvalidConfigurationException("JWT Issuer is not set.");
+            var audienceValue = configuration[audienceConfigurationKey] ??
                            throw new InvalidConfigurationException("JWT Audience is not set.");
+            var signingKeyValue = configuration[signingKeyConfigurationKey] ??
+                             throw new InvalidConfigurationException("JWT SigningKey is not set.");
 
             o.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidIssuer = issuer,
-                ValidAudience = audience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey)),
+                ValidIssuer = issuerValue,
+                ValidAudience = audienceValue,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKeyValue)),
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = false,

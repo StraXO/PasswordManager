@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using PasswordManager.Persistence.Domain.Models;
 using PasswordManager.Persistence.Repositories;
 
 namespace PasswordManager.Persistence.PostgreSql.Repositories;
@@ -42,20 +43,26 @@ public class Repository<T>(PostgresDbContext context) : IRepository<T> where T :
     {
         var result = await context.AddAsync(entity).AsTask().ConfigureAwait(false);
 
+        UpdateTimestamps();
         await context.SaveChangesAsync().ConfigureAwait(false);
 
         return result.Entity;
     }
 
-    public async Task AddManyAsync(IEnumerable<T> entities)
+    public async Task<int> AddManyAsync(IEnumerable<T> entities)
     {
         await context.AddRangeAsync(entities).ConfigureAwait(false);
+ 
+        UpdateTimestamps();
+
+        return await context.SaveChangesAsync().ConfigureAwait(false);
     }
 
     public async Task<T> UpdateAsync(T entity)
     {
         var result = context.Update(entity);
-
+        
+        UpdateTimestamps();
         await context.SaveChangesAsync().ConfigureAwait(false);
 
         return result.Entity;
@@ -95,5 +102,19 @@ public class Repository<T>(PostgresDbContext context) : IRepository<T> where T :
         context.RemoveRange(entities);
 
         await context.SaveChangesAsync().ConfigureAwait(false);
+    }
+    
+    private void UpdateTimestamps()
+    {
+        var entities = context.ChangeTracker.Entries()
+            .Where(x => x is { Entity: AbstractDatedRecord, State: EntityState.Added or EntityState.Modified });
+
+        foreach (var entity in entities)
+        {
+            if (entity.State == EntityState.Added)
+                ((AbstractDatedRecord) entity.Entity).CreatedDateTime = DateTime.UtcNow;
+            
+            ((AbstractDatedRecord) entity.Entity).ModifiedDateTime = DateTime.UtcNow;
+        }
     }
 }
