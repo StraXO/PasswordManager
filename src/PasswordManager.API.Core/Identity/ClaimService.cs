@@ -25,14 +25,14 @@ public class ClaimService(IHttpContextAccessor contextAccessor) : IClaimService
         return GetClaims().Any(c => c.Type == claimName && c.Value == claimValue);
     }
     
-    public string GetUserEmail()
+    public string GetSub()
     {
         return GetClaimValue(JwtClaimNames.Sub);
     }
     
     public long GetUserId()
     {
-        return long.Parse(GetClaimValue(JwtClaimNames.Userid));
+        return long.Parse(GetClaimValue(JwtClaimNames.UserId));
     }
     
     public Role GetRole()

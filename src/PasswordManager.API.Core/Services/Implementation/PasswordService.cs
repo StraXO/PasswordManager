@@ -6,6 +6,9 @@ using PasswordManager.Persistence.Repositories;
 
 namespace PasswordManager.API.Core.Services.Implementation;
 
+/// <summary>
+///     Implementation of <see cref="IPasswordService"/>
+/// </summary>
 public class PasswordService(IPasswordRepository repository, IClaimService claimService) : IPasswordService
 {
     public async Task<Password> AddPasswordAsync(Password password)
@@ -15,7 +18,7 @@ public class PasswordService(IPasswordRepository repository, IClaimService claim
         return await repository.AddAsync(password);
     }
 
-    public async Task<Password?> GetPasswordAsync(long id)
+    public async Task<Password?> FindPasswordAsync(long id)
     {
         var password = await repository.FindAsync(password => password.Id == id);
         
@@ -34,7 +37,7 @@ public class PasswordService(IPasswordRepository repository, IClaimService claim
         return await repository.FindAsync(id);
     }
 
-    public async Task<IEnumerable<Password>> GetUserPasswordsAsync()
+    public async Task<IEnumerable<Password>> FindUserPasswordsAsync()
     {
         return await repository.FindAllAsync(password => password.UserId == claimService.GetUserId());
     }
@@ -49,7 +52,7 @@ public class PasswordService(IPasswordRepository repository, IClaimService claim
         return await repository.UpdateAsync(password);
     }
 
-    public async Task<bool> DeletePasswordAsync(long id)
+    public async Task<bool> RemovePasswordAsync(long id)
     {
         return await repository.RemoveAsync(password => password.Id == id && password.UserId == claimService.GetUserId());
     }

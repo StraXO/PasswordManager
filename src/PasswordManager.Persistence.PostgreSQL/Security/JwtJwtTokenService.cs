@@ -10,7 +10,11 @@ using PasswordManager.Persistence.Domain.Models.Entities;
 
 namespace PasswordManager.Persistence.PostgreSql.Security;
 
-public class TokenService(ILogger<TokenService> logger, IConfiguration configuration) : ITokenService
+/// <summary>
+///     The service responsible for creating a token.
+/// </summary>
+/// <param name="configuration">The <see cref="IConfiguration"/> that contains a set of key/value application configuration properties.</param>
+public class JwtJwtTokenService(IConfiguration configuration) : IJwtTokenService
 {
     public string CreateToken(User user)
     {
@@ -33,22 +37,14 @@ public class TokenService(ILogger<TokenService> logger, IConfiguration configura
 
     private IEnumerable<Claim> CreateClaims(User user)
     {
-        try
-        {
-            return
-            [
-                new Claim(JwtClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
-                new Claim(JwtClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtClaimNames.Sub, user.Email),
-                new Claim( JwtClaimNames.Userid, user.Id.ToString()),
-                new Claim( JwtClaimNames.Role, user.Role.ToString())
-            ];
-        }
-        catch (Exception e)
-        {
-            logger.LogError(e, "Error creating claims");
-            throw;
-        }
+        return
+        [
+            new Claim(JwtClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
+            new Claim(JwtClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(JwtClaimNames.Sub, user.Email),
+            new Claim( JwtClaimNames.UserId, user.Id.ToString()),
+            new Claim( JwtClaimNames.Role, user.Role.ToString())
+        ];
     }
 
     private SigningCredentials CreateSigningCredentials()

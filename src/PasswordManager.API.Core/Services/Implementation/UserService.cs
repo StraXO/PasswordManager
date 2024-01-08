@@ -7,7 +7,10 @@ using PasswordManager.Persistence.Repositories;
 
 namespace PasswordManager.API.Core.Services.Implementation;
 
-public class UserService(IUserRepository repository, ITokenService tokenService) : IUserService
+/// <summary>
+///     Implementation of <see cref="IUserService"/>
+/// </summary>
+public class UserService(IUserRepository repository, IJwtTokenService jwtTokenService) : IUserService
 {
     public async Task<AuthResponse?> Authenticate(AuthRequest request)
     {
@@ -17,7 +20,7 @@ public class UserService(IUserRepository repository, ITokenService tokenService)
         if (user == null)
             return null;
 
-        // Check password
+        // Verify password
         if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
             return null;
 
@@ -26,7 +29,7 @@ public class UserService(IUserRepository repository, ITokenService tokenService)
 
     public AuthResponse CreateToken(User user)
     {
-        var token = tokenService.CreateToken(user);
+        var token = jwtTokenService.CreateToken(user);
 
         return new AuthResponse
         {
@@ -36,7 +39,6 @@ public class UserService(IUserRepository repository, ITokenService tokenService)
 
     public async Task<User> AddUserAsync(AuthRequest request)
     {
-        // Create user
         User user = new()
         {
             Email = request.Email,

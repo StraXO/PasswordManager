@@ -10,6 +10,7 @@ namespace PasswordManager.Persistence.PostgreSql;
 
 /// <summary>
 ///     The dependency injection class responsible for the PostgreSQL project.
+///     Injects the required dependencies to use PostgreSQL for persistence.
 /// </summary>
 public static class DependencyInjection
 {
@@ -28,7 +29,7 @@ public static class DependencyInjection
         services.AddScoped<PostgresDbContext>();
 
         // Repository used to access the database for specific models
-        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IJwtTokenService, JwtJwtTokenService>();
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IPasswordRepository, PasswordRepository>();
