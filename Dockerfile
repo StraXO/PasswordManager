@@ -7,17 +7,16 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["PasswordManagerAPI/PasswordManagerAPI.csproj", "PasswordManagerAPI/"]
-RUN dotnet restore "PasswordManagerAPI/PasswordManagerAPI.csproj"
+COPY ["src/", "/src"]
+RUN dotnet restore "PasswordManager/PasswordManager.csproj"
 COPY . .
-WORKDIR "/src/PasswordManagerAPI"
-RUN dotnet build "PasswordManagerAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "PasswordManager/PasswordManager.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "PasswordManagerAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "PasswordManager/PasswordManager.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "PasswordManagerAPI.dll"]
+ENTRYPOINT ["dotnet", "PasswordManager.dll"]
